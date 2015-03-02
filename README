@@ -1,0 +1,26 @@
+This is just a quick and dirty project to see if I can shovel some pixels
+into a QT window using a GDAL raster driver. Spoiler alert, I can!
+
+The components are as follows:
+
+gui_info.hpp - Info about X11. I use this to compute bitmasks in order
+to load pixels with specific color bands. I try to keep X11-specific
+stuff isolated here as much as I can.
+
+image.hpp - Interface for image type things. At some point I'm probably
+going to try to support vector images as well as raster ones.
+
+raster_image.hpp - Actually loads the pixels using GDAL.
+
+viewport.hpp - Holds buffers, image information (width, height, et al),
+and a gui_info object for raster_image. Must re-investigate why I received
+errors trying to read pixel information as things other than floating
+point. Not having to do that conversion would probably speed things up
+pretty significantly on large (>1 GB or so) images. Not so important in
+the prototype code.
+
+load_test - QT-Specific code. I can get a window up with an impressively
+small amount of code. I feel like the actual corret way to do this, though,
+is to write a GDAL driver as a QT image IO device. That would allow us to
+easily use all QT's optimizations without having to try to force my external
+objects into the system.
